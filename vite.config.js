@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base:"/Portfolio-website/",
+  base:"/",
   server: {
     // Ensure that Vite serves index.html for any non-file requests
     fs: {
