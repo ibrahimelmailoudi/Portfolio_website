@@ -112,13 +112,13 @@ const Hero = () => {
             <img
               src={image}
               alt="Ibrahim"
-              className="hero-image animate-pulse cursor-pointer rounded-full sm:w-80"
-            />
+              className="select-none hero-image animate-pulse cursor-pointer rounded-full sm:w-80"
+              />
             <BsFillPatchCheckFill className="absolute top-full left-1/2 transform -translate-x-1/2 text-blue-400 mt-4 text-base cursor-pointer" />
           </div>
 
           {/* Description and icons */}
-          <div className="flex flex-col">
+          <div className="flex flex-col select-none">
             <h1 className="font-Poppins sm:text-sm md:text-base lg:text-2xl">
               <span className="animate-pulse font-bold">
                 React.js Front-End Developer
@@ -196,14 +196,14 @@ const Hero = () => {
         </div>
         <div>
           <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold mb-16">
-            <span className="element font-SpaceGrotesk"></span>
+            <span className="select-none element font-SpaceGrotesk"></span>
           </h1>
         </div>
         {/* Profile overlay */}
         {showProfile && (
           <div
             ref={profileInfoRef}
-            className={`profile-info fixed z-50  rounded-3xl shadow-lg ${
+            className={`lg:flex sm:hidden md:hidden xl:flex   profile-info fixed z-50  rounded-3xl shadow-lg ${
               theme === "dark"
                 ? "bg-white text-black"
                 : "bg-gray-800 text-white"
@@ -221,7 +221,7 @@ const Hero = () => {
             }}
           >
             <IoClose
-              className="text-gray-200 text-[2.5rem] absolute top-5 right-5 cursor-pointer hover:text-white transform duration-300"
+              className={`${theme === "dark" ? "text-gray-200 hover:text-gray-500": "text-gray-400 hover:text-gray-100"} text-[2.5rem] absolute top-5 right-5 cursor-pointer  transform duration-300`}
               onClick={() => setShowProfile(false)}
             />
             <p>Ibrahim's Profile</p>
