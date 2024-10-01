@@ -19,7 +19,6 @@ const Skills = () => {
         <h1 className="text-4xl">Skills</h1>
         <div className="w-full flex flex-row gap-10 justify-center items-center">
           <div className={`${boxClass} ${boxThemeClass} text-[8rem]`}>
-            <img src={img1} alt="Skill Icon"></img>
           </div>
           <div className={`${boxClass} ${boxThemeClass}`}></div>
           <div className={`${boxClass} ${boxThemeClass}`}></div>

@@ -12,36 +12,16 @@ import mouseAnimation from "../assets/Animation/Animation - 1719841389869.json";
 import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import gsap from "gsap";
 import { ThemeContext } from "../Context/ThemeContext";
-import background1 from '../assets/background/pexels-apasaric-325185.jpg';
-import Tooltip from '@mui/material/Tooltip';
+import background1 from "../assets/background/pexels-apasaric-325185.jpg";
+import Tooltip from "@mui/material/Tooltip";
+import { IoClose } from "react-icons/io5";
 
 const Hero = () => {
   const { theme } = useContext(ThemeContext);
   const typedRef = useRef(null);
   const mouseAnimationRef = useRef(null);
-  const [showMouseAnimation, setShowMouseAnimation] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY === 0) {
-        setShowMouseAnimation(true);
-        if (mouseAnimationRef.current) {
-          gsap.to(mouseAnimationRef.current, { scale: 1, duration: 1, y: 0 });
-        }
-      } else {
-        if (mouseAnimationRef.current) {
-          gsap.to(mouseAnimationRef.current, { scale: 0, duration: 1, y: 20 });
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const [showProfile, setShowProfile] = useState(false);
+  const profileInfoRef = useRef();
 
   useEffect(() => {
     typedRef.current = new Typed(".element", {
@@ -89,100 +69,171 @@ const Hero = () => {
     );
   }, []);
 
+
+  useEffect(() => {
+    if (profileInfoRef.current) {
+      if (showProfile) {
+        // Animation for opening the profile
+        gsap.fromTo(
+          profileInfoRef.current,
+          { scale: 0.2, opacity: 0 }, // Start small and invisible
+          { scale: 1, opacity: 1, duration: 0.5 } // End normal size and visible
+        );
+      } else {
+        // Animation for closing the profile
+        gsap.to(profileInfoRef.current, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
+        });
+      }
+    }
+  }, [showProfile]);
+
+
   const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${
     theme === "dark" ? "border-white text-white" : "border-black text-black"
   }`;
 
   return (
     <>
-    <div
-      className={`relative flex flex-col items-center p-4 mb-4 ${
-        theme === "dark" ? "text-white" : "text-black"
-      }`}
-    >
-      <div className="sm:p-14 md:p-12 lg:p-10 xl:p-10 relative flex flex-col items-center">
-        <div className="image-container rounded-full relative flex justify-center transition-all duration-300">
-          <BsCaretDownFill className="absolute bottom-full left-1/2 transform mb-2 -translate-x-1/2 text-2xl" />
-          <img
-            src={image}
-            alt="Ibrahim"
-            className="hero-image animate-pulse lg:w-32 cursor-pointer rounded-full w-20 sm:w-28"
-          />
-        </div>
-        <BsFillPatchCheckFill className="text-blue-400 mt-4 text-base" />
-        <div className="flex flex-nowrap w-full flex-col gap-5 mt-4">
-          <div className="social-media flex flex-row items-center justify-center gap-4">
-            <Tooltip title="Facebook" arrow placement="left">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
-              >
-                <FaFacebookF />
-              </a>
-            </Tooltip>
-            <Tooltip title="Instagram" arrow placement="top">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
-              >
-                <BsInstagram />
-              </a>
-            </Tooltip>
-            <Tooltip title="LinkedIn" arrow placement="top">
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
-              >
-                <FaLinkedinIn />
-              </a>
-            </Tooltip>
-            <Tooltip title="GitHub" arrow placement="right">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
-              >
-                <FaGithub />
-              </a>
-            </Tooltip>
-          </div>
-          <div className="text-center max-w-[75rem] mt-4 lg:mt-0 sm:text-sm md:text-base lg:text-base">
-            <h4 className="font-Raleway">
-              I specialize in building modern, responsive websites that bring
-              your ideas to life. With a passion for coding and a knack for
-              design, I create seamless digital experiences that are both
-              visually appealing and highly functional. Let's transform your
-              vision into reality.
-            </h4>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h1 className="h-[8rem] text-xl sm:text-2xl lg:text-4xl font-bold">
-          <span className="element font-SpaceGrotesk"></span>
-        </h1>
-      </div>
-      <div>
-        {showMouseAnimation && (
+      <div
+        className={`relative flex flex-col items-center p-4 mb-4 ${
+          theme === "dark" ? "text-white" : "text-black"
+        }`}
+      >
+        <div className="px-16 py-14 relative flex flex-row gap-4 items-center">
+          {/* Photo profile */}
           <div
-            ref={mouseAnimationRef}
-            className="absolute z-10 bottom-0 left-1/2 transform -translate-x-1/2 hidden lg:flex xl:flex md:flex w-8"
+            className="image-container rounded-full relative flex justify-center transition-all duration-300"
+            onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
           >
-            <Lottie animationData={mouseAnimation} />
+            <BsCaretDownFill className="animate-bounce-slow absolute bottom-full left-1/2 transform mb-2 -translate-x-1/4  text-2xl" />
+            <img
+              src={image}
+              alt="Ibrahim"
+              className="hero-image animate-pulse cursor-pointer rounded-full sm:w-80"
+            />
+            <BsFillPatchCheckFill className="absolute top-full left-1/2 transform -translate-x-1/2 text-blue-400 mt-4 text-base cursor-pointer" />
+          </div>
+
+          {/* Description and icons */}
+          <div className="flex flex-col">
+            <h1 className="font-Poppins sm:text-sm md:text-base lg:text-2xl">
+              <span className="animate-pulse font-bold">
+                React.js Front-End Developer
+              </span>{" "}
+              Crafting Your Modern Web Applications
+              <span className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"} block py-1 animate-bounce-slow`}>
+                Making the Impossible, Possible Is MY ROLE
+              </span>
+            </h1>
+            <div className="flex flex-nowrap w-full flex-row items-center gap-5 mt-4">
+              {/* Social media icons */}
+              <div className="social-media flex flex-col items-center justify-center gap-4">
+                <Tooltip title="Facebook" arrow placement="right">
+                  <a
+                    href="https://www.facebook.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook Profile"
+                    className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
+                  >
+                    <FaFacebookF />
+                  </a>
+                </Tooltip>
+                <Tooltip title="Instagram" arrow placement="top">
+                  <a
+                    href="https://www.instagram.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram Profile"
+                    className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
+                  >
+                    <BsInstagram />
+                  </a>
+                </Tooltip>
+                <Tooltip title="LinkedIn" arrow placement="top">
+                  <a
+                    href="https://www.linkedin.com/in/ibrahimelmailoudi/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn Profile"
+                    className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
+                  >
+                    <FaLinkedinIn />
+                  </a>
+                </Tooltip>
+                <Tooltip title="GitHub" arrow placement="right">
+                  <a
+                    href="https://github.com/ibrahimelmailoudi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub Profile"
+                    className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
+                  >
+                    <FaGithub />
+                  </a>
+                </Tooltip>
+              </div>
+
+              {/* Description profile */}
+              <div className="max-w-[75rem]">
+                <h2 className="font-Raleway text-justify sm:text-sm md:text-base lg:text-lg">
+                  As a skilled React.js front-end developer, I create dynamic,
+                  responsive web applications focused on delivering seamless
+                  user experiences. With expertise in HTML, CSS, JavaScript,
+                  Tailwind CSS, and Redux, I ensure every project is visually
+                  appealing and functionally robust. I also bring back-end
+                  development experience, working with Node.js, Express, and
+                  RESTful APIs to build scalable, efficient systems. This
+                  full-stack knowledge allows me to build cohesive,
+                  high-performance web applications.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold mb-16">
+            <span className="element font-SpaceGrotesk"></span>
+          </h1>
+        </div>
+        {/* Profile overlay */}
+        {showProfile && (
+          <div
+            ref={profileInfoRef}
+            className={`profile-info fixed z-50  rounded-3xl shadow-lg ${
+              theme === "dark"
+                ? "bg-white text-black"
+                : "bg-gray-800 text-white"
+            }`}
+            style={{
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)", // Centering transformation
+              width: 800,
+              height: 500,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.2)", // Shadow for visibility
+            }}
+          >
+            <IoClose
+              className="text-gray-200 text-[2.5rem] absolute top-5 right-5 cursor-pointer hover:text-white transform duration-300"
+              onClick={() => setShowProfile(false)}
+            />
+            <p>Ibrahim's Profile</p>
           </div>
         )}
       </div>
-    </div>
-         <img src={background1} alt="background" className="absolute top-0 right-0 -z-10 opacity-30 object-cover"/>
-
-   </>
+      <img
+        src={background1}
+        alt="background"
+        className="absolute top-0 right-0 -z-10 opacity-30 object-cover"
+      />
+    </>
   );
 };
 

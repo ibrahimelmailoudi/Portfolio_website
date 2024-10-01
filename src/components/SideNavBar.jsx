@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContext";
-
+import img2 from '../assets/Logo/ibm-02.png';
 const SideNavBar = () => {
   const location = useLocation();
   const { theme } = useContext(ThemeContext);
@@ -41,6 +41,7 @@ const SideNavBar = () => {
             : "bg-white shadow-gray-300"
         } flex flex-col items-center justify-center w-12 ml-5 gap-8 text-sm h-72 rounded-full drop-shadow-lg`}
       >
+        <img src={img2} alt="img2" className="w-6 absolute top-0" />
         <Link
           to="/"
           className={`${linkClass} ${setActiveLink("/")}`}
