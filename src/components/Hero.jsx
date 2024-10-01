@@ -20,8 +20,6 @@ const Hero = () => {
   const { theme } = useContext(ThemeContext);
   const typedRef = useRef(null);
   const mouseAnimationRef = useRef(null);
-  const [showProfile, setShowProfile] = useState(false);
-  const profileInfoRef = useRef();
 
   useEffect(() => {
     typedRef.current = new Typed(".element", {
@@ -70,26 +68,6 @@ const Hero = () => {
   }, []);
 
 
-  useEffect(() => {
-    if (profileInfoRef.current) {
-      if (showProfile) {
-        // Animation for opening the profile
-        gsap.fromTo(
-          profileInfoRef.current,
-          { scale: 0.2, opacity: 0 }, // Start small and invisible
-          { scale: 1, opacity: 1, duration: 0.5 } // End normal size and visible
-        );
-      } else {
-        // Animation for closing the profile
-        gsap.to(profileInfoRef.current, {
-          scale: 0,
-          opacity: 0,
-          duration: 0.5,
-        });
-      }
-    }
-  }, [showProfile]);
-
 
   const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${
     theme === "dark" ? "border-white text-white" : "border-black text-black"
@@ -106,15 +84,14 @@ const Hero = () => {
           {/* Photo profile */}
           <div
             className="image-container rounded-full relative flex justify-center transition-all duration-300"
-            onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
           >
             <BsCaretDownFill className="animate-bounce-slow absolute bottom-full left-1/2 transform mb-2 -translate-x-1/4  text-2xl" />
             <img
               src={image}
               alt="Ibrahim"
-              className="select-none hero-image animate-pulse cursor-pointer rounded-full sm:w-80"
+              className="hero-image cursor-pointer rounded-full sm:w-80"
               />
-            <BsFillPatchCheckFill className="absolute top-full left-1/2 transform -translate-x-1/2 text-blue-400 mt-4 text-base cursor-pointer" />
+            <BsFillPatchCheckFill className="animate-pulse absolute top-full left-1/2 transform -translate-x-1/2 text-blue-400 mt-4 text-base cursor-pointer" />
           </div>
 
           {/* Description and icons */}
@@ -124,7 +101,7 @@ const Hero = () => {
                 React.js Front-End Developer
               </span>{" "}
               Crafting Your Modern Web Applications
-              <span className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"} block py-1 animate-bounce-slow`}>
+              <span className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"} block py-1`}>
                 Making the Impossible, Possible Is MY ROLE
               </span>
             </h1>
@@ -199,39 +176,11 @@ const Hero = () => {
             <span className="select-none element font-SpaceGrotesk"></span>
           </h1>
         </div>
-        {/* Profile overlay */}
-        {showProfile && (
-          <div
-            ref={profileInfoRef}
-            className={`lg:flex sm:hidden md:hidden xl:flex   profile-info fixed z-50  rounded-3xl shadow-lg ${
-              theme === "dark"
-                ? "bg-white text-black"
-                : "bg-gray-800 text-white"
-            }`}
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)", // Centering transformation
-              width: 800,
-              height: 500,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.2)", // Shadow for visibility
-            }}
-          >
-            <IoClose
-              className={`${theme === "dark" ? "text-gray-200 hover:text-gray-500": "text-gray-400 hover:text-gray-100"} text-[2.5rem] absolute top-5 right-5 cursor-pointer  transform duration-300`}
-              onClick={() => setShowProfile(false)}
-            />
-            <p>Ibrahim's Profile</p>
-          </div>
-        )}
       </div>
       <img
         src={background1}
         alt="background"
-        className="absolute top-0 right-0 -z-10 opacity-30 object-cover"
+        className="select-none pointer-events-none absolute top-0 right-0 -z-10 opacity-30 object-cover"
       />
     </>
   );

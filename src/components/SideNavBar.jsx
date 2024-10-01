@@ -7,7 +7,6 @@ import {
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContext";
-import img2 from '../assets/Logo/ibm-02.png';
 const SideNavBar = () => {
   const location = useLocation();
   const { theme } = useContext(ThemeContext);
