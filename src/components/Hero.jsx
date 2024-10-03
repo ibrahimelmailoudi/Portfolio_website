@@ -12,7 +12,7 @@ import mouseAnimation from "../assets/Animation/Animation - 1719841389869.json";
 import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import gsap from "gsap";
 import { ThemeContext } from "../Context/ThemeContext";
-import background1 from "../assets/background/pexels-apasaric-325185.jpg";
+import background1 from "../assets/background/controls-1853330_1920.jpg";
 import Tooltip from "@mui/material/Tooltip";
 import { IoClose } from "react-icons/io5";
 
@@ -61,53 +61,50 @@ const Hero = () => {
 
   useEffect(() => {
     gsap.fromTo(
-      ".social-media, .devLo",
-      { scale: 0, y: 20 },
-      { scale: 1, y: 0, duration: 1, delay: 0.5 }
+      ".social-media",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, delay: 0.5, stagger: 0.2 }
     );
   }, []);
 
-
-
-  const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${
-    theme === "dark" ? "border-white text-white" : "border-black text-black"
-  }`;
+  const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${theme === "dark" ? "border-white text-white" : "border-black text-black"
+    }`;
 
   return (
     <>
       <div
-        className={`relative flex flex-col items-center p-4 mb-4 ${
-          theme === "dark" ? "text-white" : "text-black"
-        }`}
+        className={`relative flex flex-col items-center p-4 mb-4 ${theme === "dark" ? "text-white" : "text-black"
+          }`}
       >
-        <div className="px-16 py-14 relative flex flex-row gap-4 items-center">
+        <div className="xl:px-16 xl:py-14 lg:px-16 lg:py-10 md:px-8 md:py-6 sm:px-4 sm:py-2 relative flex xl:flex-row lg:flex-row md:flex-col sm:flex-col gap-4 items-center">
           {/* Photo profile */}
-          <div
-            className="image-container rounded-full relative flex justify-center transition-all duration-300"
-          >
-            <BsCaretDownFill className="animate-bounce-slow absolute bottom-full left-1/2 transform mb-2 -translate-x-1/4  text-2xl" />
+          <div className="md:mb-5 sm:mb-5 image-container rounded-full relative flex justify-center transition-all duration-300">
+            {" "}
             <img
               src={image}
-              alt="Ibrahim"
-              className="hero-image cursor-pointer rounded-full sm:w-80"
-              />
-            <BsFillPatchCheckFill className="animate-pulse absolute top-full left-1/2 transform -translate-x-1/2 text-blue-400 mt-4 text-base cursor-pointer" />
+              alt="Ibrahim el Mailoudi's Profile Image"
+              className="select-none hero-image cursor-pointer rounded-full 2xl:w-[71rem] xl:w-[70rem] lg:w-[65rem] md:w-40 sm:w-20 "
+            />
+            <BsFillPatchCheckFill className="animate-pulse absolute mt-4 top-full left-1/2 transform -translate-x-1/2 text-blue-400 xl:text-base lg:text-base md:text-sm sm:text-sm" />
           </div>
 
           {/* Description and icons */}
           <div className="flex flex-col select-none">
-            <h1 className="font-Poppins sm:text-sm md:text-base lg:text-2xl">
+            <h1 className="font-Poppins text-wrap xl:text-left lg:text-left md:text-center sm:text-center 2xl:text-4xl xl:text-3xl lg:text-2xl md:text-base sm:text-sm">
               <span className="animate-pulse font-bold">
                 React.js Front-End Developer
               </span>{" "}
               Crafting Your Modern Web Applications
-              <span className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"} block py-1`}>
+              <span
+                className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"
+                  } block py-1`}
+              >
                 Making the Impossible, Possible Is MY ROLE
               </span>
             </h1>
-            <div className="flex flex-nowrap w-full flex-row items-center gap-5 mt-4">
+            <div className="flex flex-nowrap w-full xl:flex-row lg:flex-row sm:flex-col items-center gap-5 mt-4">
               {/* Social media icons */}
-              <div className="social-media flex flex-col items-center justify-center gap-4">
+              <div className="social-media flex xl:flex-col lg:flex-col sm:flex-row items-center justify-center gap-4">
                 <Tooltip title="Facebook" arrow placement="right">
                   <a
                     href="https://www.facebook.com/"
@@ -155,8 +152,8 @@ const Hero = () => {
               </div>
 
               {/* Description profile */}
-              <div className="max-w-[75rem]">
-                <h2 className="font-Raleway text-justify sm:text-sm md:text-base lg:text-lg">
+              <div>
+                <h2 className="font-Raleway xl:flex lg:flex md:flex sm:hidden xl:text-justify lg:text-justify xl:text-wrap lg:text-wrap md:text-wrap md:text-center sm:text-center sm:text-sm md:text-sm lg:text-lg">
                   As a skilled React.js front-end developer, I create dynamic,
                   responsive web applications focused on delivering seamless
                   user experiences. With expertise in HTML, CSS, JavaScript,
@@ -172,16 +169,17 @@ const Hero = () => {
           </div>
         </div>
         <div>
-          <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold mb-16">
+          <h1 className="text-xl xl:flex lg:flex md:flex sm:hidden sm:text-2xl lg:text-4xl font-bold mb-16">
             <span className="select-none element font-SpaceGrotesk"></span>
           </h1>
         </div>
       </div>
-      <img
+      {/* <img
         src={background1}
         alt="background"
-        className="select-none pointer-events-none absolute top-0 right-0 -z-10 opacity-30 object-cover"
-      />
+        loading="lazy"
+        className="select-none pointer-events-none absolute top-0 right-0 -z-10 opacity-10 object-cover"
+      /> */}
     </>
   );
 };

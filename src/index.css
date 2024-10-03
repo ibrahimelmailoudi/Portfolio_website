@@ -5,6 +5,12 @@
 * {
   font-family: "Poppins", "sans serif";
 }
+/* Hide the scrollbar on WebKit browsers (Chrome, Safari) */
+
+/* Hide the scrollbar on Firefox */
+html {
+  scrollbar-width: none; /* Firefox-specific */
+}
 body {
   display: flex;
   position: relative;
@@ -26,14 +32,6 @@ body.light {
 body.dark {
   @apply bg-1p text-white; /* Styles for dark mode */
 }
-/* .icon-sun:before {
-  content: "\e9d4";
-  font-size: 18px;
-}
-.icon-moon-o:before {
-  content: "\f186";
-  font-size: 18px;
-} */
 
 
 /*-----------------------------------------------------------------------------------------------------------------------*/

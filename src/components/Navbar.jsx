@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import {
   BsMoonStars,
   BsFillSunFill,
@@ -6,19 +6,25 @@ import {
   BsInfoCircle,
   BsEnvelopeAt,
   BsBoxes,
+  BsHouseFill,
+  BsFileCodeFill,
+  BsFileCode,
+  BsInfoCircleFill,
+  BsEnvelopeAtFill,
 } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeContext } from "../Context/ThemeContext";
 import gsap from "gsap";
 import barAnim from "../assets/Animation/menuV2.json";
+import Celebrate from "../assets/Animation/Celebrate.json";
+
 import Lottie from "lottie-react";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Darklogo from "../assets/Logo/ibm logo dark-01.png";
 import Lightlogo from "../assets/Logo/ibm logo light-01.png";
 import { IoClose } from "react-icons/io5";
-import { useRef } from "react";
 
 const Navbar = () => {
   const { theme, handleSwitchMode } = useContext(ThemeContext);
@@ -26,18 +32,16 @@ const Navbar = () => {
   const [isScrollingUp, setScrollingUp] = useState(false);
   const [isScrollingDown, setScrollingDown] = useState(false);
   const [atTop, setTop] = useState(true);
-  const [activeLink, setActiveLink] = useState(location.pathname);
-  const profileInfoRef = useRef();
   const [showProfile, setShowProfile] = useState(false);
+  const DarklogoRef = useRef();
+  const LightlogoRef = useRef();
+  const profileInfoRef = useRef();
+  var tl = gsap.timeline();
 
   const linkClass =
     theme === "dark"
       ? "text-gray-300 hover:text-white"
       : "text-black hover:text-gray-700";
-
-  const setActiveLinkHandler = (path) => {
-    setActiveLink(path);
-  };
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -68,17 +72,64 @@ const Navbar = () => {
   const handleIconClick = () => {
     handleSwitchMode();
   };
+
+  // GSAP animation for Navbar
+  useEffect(() => {
+    if (isScrollingUp && !atTop) {
+      gsap.to(".Top-navbar", { y: 0, opacity: 1, duration: 0.5 });
+    } else if (isScrollingDown) {
+      gsap.to(".Top-navbar", { y: -50, opacity: 0, duration: 0.5 });
+    } else if (atTop) {
+      gsap.to(".Top-navbar", { y: 0, opacity: 1, duration: 0.5 });
+    }
+  }, [isScrollingUp, isScrollingDown, atTop]);
+  // GSAP animation for logos
+  useEffect(() => {
+    if (DarklogoRef.current) {
+      gsap.fromTo(
+        DarklogoRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 2.5 }
+      );
+    }
+    if (LightlogoRef.current) {
+      gsap.fromTo(
+        LightlogoRef.current,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 2.5 }
+      );
+    }
+  }, [theme]);
+
   useEffect(() => {
     if (profileInfoRef.current) {
       if (showProfile) {
-        // Animation for opening the profile
         gsap.fromTo(
-          profileInfoRef.current,
-          { scale: 0.2, opacity: 0 }, // Start small and invisible
-          { scale: 1, opacity: 1, duration: 0.5 } // End normal size and visible
+          ".Profile-show",
+          { x: 0 },
+          { x: 680, duration: 2, delay: 2, ease: "power1.out" }
         );
       } else {
-        // Animation for closing the profile
+        gsap.to(".Profile-show", {
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
+          delay: 12
+        });
+      }
+    }
+  }, [showProfile]);
+
+  // GSAP animation for profile modal
+  useEffect(() => {
+    if (profileInfoRef.current) {
+      if (showProfile) {
+        gsap.fromTo(
+          profileInfoRef.current,
+          { scale: 0.2, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "power1.out" }
+        );
+      } else {
         gsap.to(profileInfoRef.current, {
           scale: 0,
           opacity: 0,
@@ -87,6 +138,7 @@ const Navbar = () => {
       }
     }
   }, [showProfile]);
+
   // Custom styled tooltip that respects dark and light modes
   const CustomTooltip = styled(Tooltip)(({ theme }) => ({
     tooltip: {
@@ -102,90 +154,85 @@ const Navbar = () => {
 
   return (
     <div
-      className={`nav-b rounded-b-[2rem] ${
-        isScrollingUp && !isScrollingDown ? "sticky top-0 bg-opacity-0" : ""
-      } z-20 flex items-center px-4 py-2 ${
-        !isScrollingDown && atTop ? "" : "bg-opacity-0"
-      }`}
+
+      className={`nav-b rounded-b-[2rem] ${isScrollingUp && !isScrollingDown ? "sticky top-0 bg-opacity-0" : ""
+        } z-20 flex items-center px-4 py-2 ${!isScrollingDown && atTop ? "" : "bg-opacity-0"
+        }`}
+        
     >
-      <nav className="flex items-center p-2 w-full">
-        {theme === "dark" ? (
-          <img
-            src={Lightlogo}
-            alt="Light"
-            className="absolute top-10 left-10 z-10 w-14 cursor-pointer animate-pulse hover:scale-110 transition duration-150"
-            onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
-          />
-        ) : (
-          <img
-            src={Darklogo}
-            alt="Dark"
-            className="absolute top-10 left-10 z-10 w-14 cursor-pointer animate-pulse hover:scale-110 transition duration-150"
-            onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
-          />
-        )}
-        <div
-          className={`absolute top-7 left-7 overflow-hidden rounded-full z-0 w-20 h-20 ${
-            theme === "dark" ? "bg-black" : "bg-white"
-          } shadow-md drop-shadow-sm`}
-        ></div>
-        <div className="sm:hidden md:flex lg:flex xl:flex 2xl:flex w-full mr-auto ml-auto justify-center">
+
+      <nav className="flex flex-row items-center p-2 w-full">
+
+        <div className="relative group">
+          {theme === "dark" ? (
+            <img
+              ref={LightlogoRef}
+              src={Darklogo}
+              alt="Light theme logo for Ibrahim's website"
+              className="fixed bottom-10 right-10 z-40 w-10 cursor-pointer animate-pulse"
+              onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
+            />
+          ) : (
+            <img
+              ref={DarklogoRef}
+              src={Lightlogo}
+              alt="Dark theme logo for Ibrahim's website"
+              className="fixed bottom-10 right-10 z-40 w-10 cursor-pointer animate-pulse"
+              onClick={() => setShowProfile((prev) => !prev)} // Toggle on click
+            />
+          )}
           <div
-            className={`${isScrollingUp ? "drop-shadow-md shadow-white" : ""} ${
-              theme === "dark"
-                ? "bg-3p drop-shadow-md"
-                : "bg-white drop-shadow-md"
-            } flex items-center gap-14 py-[0.8rem] px-28 rounded-full`}
+            className={`xl:group-hover:scale-[300%] lg:group-hover:scale-[300%] transition duration-300 fixed bottom-8 right-8 rounded-full z-30 w-14 h-14 ${theme === "dark" ? "bg-white" : "bg-black"
+              } shadow-md drop-shadow-md`}
+          ></div>
+        </div>
+
+        {/*TopNavbar */}
+        <div className="Top-navbar flex w-full mr-auto ml-auto justify-center">
+          <div
+            className={`${isScrollingUp ? "drop-shadow-md shadow-white" : ""} ${theme === "dark"
+              ? "bg-3p drop-shadow-md"
+              : "bg-white drop-shadow-md"
+              } flex items-center gap-14 py-[0.8rem] px-28 rounded-full xl:flex lg:flex md:hidden sm:hidden`}
           >
             <CustomTooltip title="Home" arrow placement="bottom">
               <span>
-                <Link
-                  to="/"
-                  className={`${linkClass} ${
-                    activeLink === "/" ? "border-b-2 border-white" : ""
-                  }`}
-                  onClick={() => setActiveLinkHandler("/")}
-                >
-                  <BsHouse className="text-[1.28rem]" />
+                <Link to="/Portfolio_website/" className={`${linkClass}`}>
+                  {location.pathname === "/Portfolio_website/" ? <BsHouseFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-blue-300" : ""}`} />
+                    : <BsHouse
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-blue-300" : ""}`} />
+                  }
+
                 </Link>
               </span>
             </CustomTooltip>
             <CustomTooltip title="Projects" arrow placement="bottom">
               <span>
-                <Link
-                  to="/projects"
-                  className={`${linkClass} ${
-                    activeLink === "/projects" ? "border-b-2 border-white" : ""
-                  }`}
-                  onClick={() => setActiveLinkHandler("/projects")}
-                >
-                  <BsBoxes className="text-[1.28rem]" />
+                <Link to="/Portfolio_website/projects" className={`${linkClass} `}>
+                  {location.pathname === "/Portfolio_website/projects" ? <BsFileCodeFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-blue-300" : ""}`} />
+                    : <BsFileCode
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-blue-300" : ""}`} />
+                  }
                 </Link>
               </span>
             </CustomTooltip>
             <CustomTooltip title="About" arrow placement="bottom">
               <span>
-                <Link
-                  to="/about"
-                  className={`${linkClass} ${
-                    activeLink === "/about" ? "border-b-2 border-white" : ""
-                  }`}
-                  onClick={() => setActiveLinkHandler("/about")}
-                >
-                  <BsInfoCircle className="text-[1.28rem]" />
+                <Link to="/Portfolio_website/about" className={`${linkClass}`}>
+                  {location.pathname === "/Portfolio_website/about" ? <BsInfoCircleFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-blue-300" : ""}`} />
+                    : <BsInfoCircle
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-blue-300" : ""}`} />
+                  }
                 </Link>
               </span>
             </CustomTooltip>
             <CustomTooltip title="Contact" arrow placement="bottom">
               <span>
-                <Link
-                  to="/contact"
-                  className={`${linkClass} ${
-                    activeLink === "/contact" ? "border-b-2 border-white" : ""
-                  }`}
-                  onClick={() => setActiveLinkHandler("/contact")}
-                >
-                  <BsEnvelopeAt className="text-[1.28rem]" />
+                <Link to="/Portfolio_website/contact" className={`${linkClass}`}>
+                  {location.pathname === "/Portfolio_website/contact" ? <BsEnvelopeAtFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-blue-300" : ""}`} />
+                    : <BsEnvelopeAt
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-blue-300" : ""}`} />
+                  }
                 </Link>
               </span>
             </CustomTooltip>
@@ -194,11 +241,10 @@ const Navbar = () => {
 
         {atTop && (
           <div
-            className={`${
-              theme === "dark"
-                ? "text-slate-300 bg-3p border-slate-300 shadow-white drop-shadow-md transition-all ease-in duration-300 hover:text-white hover:border-white"
-                : "text-yellow-300 hover:border-yellow-300 bg-white bg-opacity-100 transition-all ease-in duration-300"
-            } flex items-center ml-auto rounded-full shadow-sm drop-shadow shadow-white border p-2 border-solid cursor-pointer`}
+            className={`${theme === "dark"
+              ? "text-slate-300 bg-3p border-slate-300 shadow-white drop-shadow-md transition-all ease-in duration-300 hover:text-white hover:border-white"
+              : "text-yellow-300 hover:border-yellow-300 bg-white bg-opacity-100 transition-all ease-in duration-300"
+              } flex items-center xl:ml-auto lg:ml-auto md:mr-auto sm:mr-auto rounded-full shadow-sm drop-shadow shadow-white border p-2 border-solid cursor-pointer`}
             onClick={handleIconClick}
             aria-label="Toggle Theme"
           >
@@ -217,42 +263,56 @@ const Navbar = () => {
             </CustomTooltip>
           </div>
         )}
-{/* Profile overlay */}
-{showProfile && (
+        {/* Profile overlay */}
+        {showProfile && (
           <div
             ref={profileInfoRef}
-            className={`lg:flex sm:hidden md:hidden xl:flex   profile-info fixed z-50  rounded-3xl shadow-lg ${
-              theme === "dark"
-                ? "bg-white text-black"
-                : "bg-gray-800 text-white"
-            }`}
+            className={`lg:flex sm:hidden md:hidden xl:flex profile-info fixed z-20 shadow-lg ${theme === "dark"
+              ? "bg-white text-black"
+              : "bg-gray-800 text-white"
+              }`}
             style={{
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)", // Centering transformation
-              width: 800,
-              height: 500,
+              width: "100%",
+              height: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.2)", // Shadow for visibility
+              boxShadow: "0 10px 10px rgba(0, 0, 0, 0.2)", // Shadow for 3D effect
             }}
           >
-            <IoClose
-              className={`${theme === "dark" ? "text-gray-200 hover:text-gray-500": "text-gray-400 hover:text-gray-100"} text-[2.5rem] absolute top-5 right-5 cursor-pointer  transform duration-300`}
+            <span
               onClick={() => setShowProfile(false)}
-            />
-            <p>Ibrahim's Profile</p>
+              className={`absolute ${theme === "dark"
+                ? "text-gray-300 hover:text-gray-100"
+                : "text-gray-400 hover:text-gray-600"
+                } cursor-pointer text-4xl transition duration-150`}
+              style={{
+                top: "26px",
+                right: "26px",
+              }}
+            >
+              <IoClose />
+            </span>
+            <h1 className="xl:text-7xl lg:text-7xl md:text-4xl sm:text-xl animate-pulse">Coming Soon!</h1>
+            <div
+              className={`Profile-show absolute w-[40rem] h-40 ${theme === "dark" ? "bg-white" : "bg-[#1F2937]"}`}
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            ></div>
+            <Lottie animationData={Celebrate} className="absolute" style={{
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }
+            }></Lottie>
           </div>
         )}
-        <div className="sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden flex items-center w-full justify-end p-3">
-          <CustomTooltip title="Show menu" arrow placement="bottom">
-            <span className="flex items-center rounded-lg border border-solid p-2 hover:text-black hover:bg-white cursor-pointer">
-              <FaBars className="text-2xl" />
-              <Lottie animationData={barAnim} />
-            </span>
-          </CustomTooltip>
-        </div>
       </nav>
     </div>
   );
