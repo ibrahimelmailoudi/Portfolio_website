@@ -92,6 +92,7 @@ const Navbar = () => {
         { scale: 1, opacity: 1, duration: 2.5 }
       );
     }
+
     if (LightlogoRef.current) {
       gsap.fromTo(
         LightlogoRef.current,
@@ -99,6 +100,7 @@ const Navbar = () => {
         { scale: 1, opacity: 1, duration: 2.5 }
       );
     }
+
   }, [theme]);
 
   useEffect(() => {
@@ -138,7 +140,7 @@ const Navbar = () => {
       }
     }
   }, [showProfile]);
-
+  
   // Custom styled tooltip that respects dark and light modes
   const CustomTooltip = styled(Tooltip)(({ theme }) => ({
     tooltip: {
@@ -158,12 +160,12 @@ const Navbar = () => {
       className={`nav-b rounded-b-[2rem] ${isScrollingUp && !isScrollingDown ? "sticky top-0 bg-opacity-0" : ""
         } z-20 flex items-center px-4 py-2 ${!isScrollingDown && atTop ? "" : "bg-opacity-0"
         }`}
-        
+
     >
 
       <nav className="flex flex-row items-center p-2 w-full">
 
-        <div className="relative group">
+        <div className="relative help-section group">
           {theme === "dark" ? (
             <img
               ref={LightlogoRef}
@@ -191,16 +193,16 @@ const Navbar = () => {
         <div className="Top-navbar flex w-full mr-auto ml-auto justify-center">
           <div
             className={`${isScrollingUp ? "drop-shadow-md shadow-white" : ""} ${theme === "dark"
-              ? "bg-3p drop-shadow-md"
+              ? "bg-[#2f2d45] drop-shadow-md"
               : "bg-white drop-shadow-md"
               } flex items-center gap-14 py-[0.8rem] px-28 rounded-full xl:flex lg:flex md:hidden sm:hidden`}
           >
             <CustomTooltip title="Home" arrow placement="bottom">
               <span>
                 <Link to="/Portfolio_website/" className={`${linkClass}`}>
-                  {location.pathname === "/Portfolio_website/" ? <BsHouseFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-blue-300" : ""}`} />
+                  {location.pathname === "/Portfolio_website/" ? <BsHouseFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-primary" : ""}`} />
                     : <BsHouse
-                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-blue-300" : ""}`} />
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/" ? "text-primary" : ""}`} />
                   }
 
                 </Link>
@@ -209,9 +211,9 @@ const Navbar = () => {
             <CustomTooltip title="Projects" arrow placement="bottom">
               <span>
                 <Link to="/Portfolio_website/projects" className={`${linkClass} `}>
-                  {location.pathname === "/Portfolio_website/projects" ? <BsFileCodeFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-blue-300" : ""}`} />
+                  {location.pathname === "/Portfolio_website/projects" ? <BsFileCodeFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-primary" : ""}`} />
                     : <BsFileCode
-                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-blue-300" : ""}`} />
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/projects" ? "text-primary" : ""}`} />
                   }
                 </Link>
               </span>
@@ -219,9 +221,9 @@ const Navbar = () => {
             <CustomTooltip title="About" arrow placement="bottom">
               <span>
                 <Link to="/Portfolio_website/about" className={`${linkClass}`}>
-                  {location.pathname === "/Portfolio_website/about" ? <BsInfoCircleFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-blue-300" : ""}`} />
+                  {location.pathname === "/Portfolio_website/about" ? <BsInfoCircleFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-primary" : ""}`} />
                     : <BsInfoCircle
-                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-blue-300" : ""}`} />
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/about" ? "text-primary" : ""}`} />
                   }
                 </Link>
               </span>
@@ -229,9 +231,9 @@ const Navbar = () => {
             <CustomTooltip title="Contact" arrow placement="bottom">
               <span>
                 <Link to="/Portfolio_website/contact" className={`${linkClass}`}>
-                  {location.pathname === "/Portfolio_website/contact" ? <BsEnvelopeAtFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-blue-300" : ""}`} />
+                  {location.pathname === "/Portfolio_website/contact" ? <BsEnvelopeAtFill className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-primary" : ""}`} />
                     : <BsEnvelopeAt
-                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-blue-300" : ""}`} />
+                      className={`text-[1.28rem] ${location.pathname === "/Portfolio_website/contact" ? "text-primary" : ""}`} />
                   }
                 </Link>
               </span>

@@ -20,7 +20,7 @@ export default {
         '4.5p': '#5a5a5e',
         '4.6p': '#9e9ea5',
         '5p': '#ededf0',
-
+        'primary':'#45FFCA'
       },
       fontSize: {
         '1.5': '0.50rem',
@@ -33,7 +33,12 @@ export default {
       fontFamily: {
         'SpaceGrotesk': ["Space Grotesk", "sans-serif"],
         'Poppins': ["Poppins", "sans-serif"],
-        'Raleway' : ["Raleway", "sans-serif"],
+        'Raleway': ["Raleway", "sans-serif"],
+        'Spline': ["Spline Sans Mono", "sans-serif"],
+        'Zilla': ["Zilla Slab", "sans-serif"],
+        'Oxanium': ["Oxanium", "sans-serif"],
+        'Chakra': ["Chakra Petch", "sans-serif"],
+
       }
     },
   },

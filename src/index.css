@@ -30,7 +30,7 @@ body.light {
 }
 
 body.dark {
-  @apply bg-1p text-white; /* Styles for dark mode */
+  @apply bg-[#191825] text-white; /* Styles for dark mode */
 }
 
 

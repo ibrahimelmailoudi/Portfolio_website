@@ -1,6 +1,8 @@
+import Container from "../components/Container";
+
 const Projects = () => {
     return ( 
-        <div></div>
+        <Container></Container>
      );
 }
  

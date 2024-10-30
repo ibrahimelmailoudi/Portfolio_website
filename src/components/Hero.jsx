@@ -1,40 +1,57 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
-import image from "../assets/Logo/ibrahim_icon.png";
+import image1 from "../assets/images/cropped_image-removebg-preview.png";
+import image2 from "../assets/images/P01.png";
+import CV from "../assets/document/CV_Ibrahim_El_Mailoudi.pdf";
 import {
-  BsCaretDownFill,
   BsFillPatchCheckFill,
   BsInstagram,
 } from "react-icons/bs";
 import Typed from "typed.js";
-import Lottie from "lottie-react";
-import devAnimation from "../assets/Animation/Animation - 1719798504786.json";
-import mouseAnimation from "../assets/Animation/Animation - 1719841389869.json";
-import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaDownload, FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import gsap from "gsap";
 import { ThemeContext } from "../Context/ThemeContext";
-import background1 from "../assets/background/controls-1853330_1920.jpg";
 import Tooltip from "@mui/material/Tooltip";
-import { IoClose } from "react-icons/io5";
 
 const Hero = () => {
   const { theme } = useContext(ThemeContext);
   const typedRef = useRef(null);
-  const mouseAnimationRef = useRef(null);
+  const elementRef = useRef(null);
+  const imageRef = useRef(null);
+  const [ishover, setIshover] = useState(false);
 
   useEffect(() => {
-    typedRef.current = new Typed(".element", {
-      strings: [
-        "Welcome To my Portfolio website",
-        "Hope you enjoy exploring",
-        "my work experience",
-      ],
-      typeSpeed: 30,
-      backSpeed: 50,
-      loop: true,
-      smartBackspace: true,
-    });
+    let observer;
+    if (elementRef.current) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !typedRef.current) {
+            typedRef.current = new Typed(".element", {
+              strings: [
+                "Welcome to my professional portfolio",
+                "I am passionate about building great <br/>user experiences",
+                "Explore my projects and work journey",
+                "Bringing creativity and technology <br/>together",
+                "Let's build the future, one line of code <br/>at a time",
+              ],
+              typeSpeed: 30,
+              backSpeed: 50,
+              loop: true,
+              smartBackspace: true,
+              showCursor: false,
+            });
+          }
+        },
+        {
+          threshold: 0.5, // Trigger when 50% of the element is visible
+        }
+      );
+      observer.observe(elementRef.current);
+    }
 
     return () => {
+      if (observer && elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
       if (typedRef.current) {
         typedRef.current.destroy();
       }
@@ -42,75 +59,103 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    gsap.fromTo(
-      ".element",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.5 }
-    );
+    const timeline = gsap.timeline({ delay: 0.5 });
+    timeline
+      .fromTo(
+        ".image-profile",
+        { opacity: 0, x: 50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          onStart: () => {
+            if (imageRef.current) {
+              imageRef.current.src = image1;
+            }
+          },
+        }
+      )
+      .fromTo(".check", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
+      .fromTo(".job", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
+      .fromTo(".name", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
+      .fromTo(".element", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
+      .fromTo(".social-media-btndol", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, stagger: 0.2 });
   }, []);
 
   useEffect(() => {
-    if (mouseAnimationRef.current) {
-      gsap.fromTo(
-        mouseAnimationRef.current,
-        { scale: 0, y: 20 },
-        { scale: 1, y: 0, duration: 1, delay: 0.5 }
-      );
+    if (imageRef.current) {
+      if (ishover) {
+        gsap.to(imageRef.current, {
+          duration: 0.5,
+          opacity: 0,
+          onComplete: () => {
+            if (imageRef.current) {
+              imageRef.current.src = image2;
+              gsap.to(imageRef.current, { opacity: 1, duration: 0.5 });
+            }
+          },
+        });
+      } else {
+        gsap.to(imageRef.current, {
+          duration: 0.5,
+          opacity: 0,
+          onComplete: () => {
+            if (imageRef.current) {
+              imageRef.current.src = image1;
+              gsap.to(imageRef.current, { opacity: 1, duration: 0.5 });
+            }
+          },
+        });
+      }
     }
-  }, []);
+  }, [ishover]);
 
-  useEffect(() => {
-    gsap.fromTo(
-      ".social-media",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.5, stagger: 0.2 }
-    );
-  }, []);
-
-  const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${theme === "dark" ? "border-white text-white" : "border-black text-black"
+  const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${theme === "dark" ? "border-primary text-primary" : "border-black text-black"
     }`;
 
   return (
-    <>
-      <div
-        className={`relative flex flex-col items-center p-4 mb-4 ${theme === "dark" ? "text-white" : "text-black"
-          }`}
-      >
-        <div className="xl:px-16 xl:py-14 lg:px-16 lg:py-10 md:px-8 md:py-6 sm:px-4 sm:py-2 relative flex xl:flex-row lg:flex-row md:flex-col sm:flex-col gap-4 items-center">
-          {/* Photo profile */}
-          <div className="md:mb-5 sm:mb-5 image-container rounded-full relative flex justify-center transition-all duration-300">
-            {" "}
-            <img
-              src={image}
-              alt="Ibrahim el Mailoudi's Profile Image"
-              className="select-none hero-image cursor-pointer rounded-full 2xl:w-[71rem] xl:w-[70rem] lg:w-[65rem] md:w-40 sm:w-20 "
-            />
-            <BsFillPatchCheckFill className="animate-pulse absolute mt-4 top-full left-1/2 transform -translate-x-1/2 text-blue-400 xl:text-base lg:text-base md:text-sm sm:text-sm" />
-          </div>
-
-          {/* Description and icons */}
-          <div className="flex flex-col select-none">
-            <h1 className="font-Poppins text-wrap xl:text-left lg:text-left md:text-center sm:text-center 2xl:text-4xl xl:text-3xl lg:text-2xl md:text-base sm:text-sm">
-              <span className="animate-pulse font-bold">
-                React.js Front-End Developer
-              </span>{" "}
-              Crafting Your Modern Web Applications
-              <span
-                className={`${theme === "dark" ? "text-yellow-300" : "text-blue-400"
-                  } block py-1`}
-              >
-                Making the Impossible, Possible Is MY ROLE
-              </span>
+    <div
+      className={`relative flex flex-col items-center p-4 mb-4 ${theme === "dark" ? "text-white" : "text-black"
+        }`}
+    >
+      <div className="xl:px-16 xl:py-14 lg:px-16 lg:py-10 md:px-8 md:py-6 sm:px-4 sm:py-2 relative flex xl:flex-row lg:flex-row md:flex-col sm:flex-col gap-4 items-center">
+        {/* Description and icons */}
+        <div className="flex flex-col gap-2 h-96 select-none">
+          <h1
+            ref={elementRef}
+            className="job font-Zilla font-medium text-wrap xl:text-left lg:text-left md:text-center sm:text-center 2xl:text-2xl xl:text-xl lg:text-md md:text-base sm:text-sm"
+          >
+            Front-End Developer
+          </h1>
+          <div>
+            <h1 className="name font-Spline text-5xl">
+              Hello I'm <br /> <span className={`font-Spline ${theme === "dark" ? "text-primary" : "text-primary"}`}>Ibrahim El Mailoudi</span>
             </h1>
-            <div className="flex flex-nowrap w-full xl:flex-row lg:flex-row sm:flex-col items-center gap-5 mt-4">
+          </div>
+          <div className="flex flex-nowrap w-full xl:flex-col lg:flex-col sm:flex-col gap-5 mt-4">
+            <div>
+              <h1 className="flex items-center h-14 text-xl xl:flex lg:flex md:flex sm:hidden sm:text-2xl lg:text-2xl">
+                <span className="element select-none font-Chakra"></span>
+              </h1>
+            </div>
+            <div className="social-media-btndol flex flex-row align-middle items-center gap-9 py-4">
+              {/*Button*/}
+              <a
+                href={CV} // Replace with the actual path to your file
+                download="CV_Ibrahim_El_Mailoudi.pdf" // Replace with the desired download file name
+              >
+                <button className="flex cursor-pointer opacity-70 text-primary hover:opacity-100 hover:scale-110 border-opacity-50 transition transform duration-200 items-center justify-center gap-2 h-12 w-48 rounded-full border-1.8 border-primary">
+                  <span className="p-0 font-Poppins text-base">DOWNLOAD CV</span>
+                  <FaDownload />
+                </button>
+              </a>
               {/* Social media icons */}
-              <div className="social-media flex xl:flex-col lg:flex-col sm:flex-row items-center justify-center gap-4">
-                <Tooltip title="Facebook" arrow placement="right">
+              <div className="flex flex-row items-center justify-center gap-4">
+                <Tooltip title="Facebook" arrow placement="top">
                   <a
-                    href="https://www.facebook.com/"
+                    href="#facebook"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Facebook Profile"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
                   >
                     <FaFacebookF />
@@ -118,10 +163,9 @@ const Hero = () => {
                 </Tooltip>
                 <Tooltip title="Instagram" arrow placement="top">
                   <a
-                    href="https://www.instagram.com/"
+                    href="#instagram"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="Instagram Profile"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
                   >
                     <BsInstagram />
@@ -129,10 +173,9 @@ const Hero = () => {
                 </Tooltip>
                 <Tooltip title="LinkedIn" arrow placement="top">
                   <a
-                    href="https://www.linkedin.com/in/ibrahimelmailoudi/"
+                    href="https://www.linkedin.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="LinkedIn Profile"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
                   >
                     <FaLinkedinIn />
@@ -140,47 +183,35 @@ const Hero = () => {
                 </Tooltip>
                 <Tooltip title="GitHub" arrow placement="right">
                   <a
-                    href="https://github.com/ibrahimelmailoudi"
+                    href="#github"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="GitHub Profile"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
                   >
                     <FaGithub />
                   </a>
                 </Tooltip>
               </div>
-
-              {/* Description profile */}
-              <div>
-                <h2 className="font-Raleway xl:flex lg:flex md:flex sm:hidden xl:text-justify lg:text-justify xl:text-wrap lg:text-wrap md:text-wrap md:text-center sm:text-center sm:text-sm md:text-sm lg:text-lg">
-                  As a skilled React.js front-end developer, I create dynamic,
-                  responsive web applications focused on delivering seamless
-                  user experiences. With expertise in HTML, CSS, JavaScript,
-                  Tailwind CSS, and Redux, I ensure every project is visually
-                  appealing and functionally robust. I also bring back-end
-                  development experience, working with Node.js, Express, and
-                  RESTful APIs to build scalable, efficient systems. This
-                  full-stack knowledge allows me to build cohesive,
-                  high-performance web applications.
-                </h2>
-              </div>
             </div>
           </div>
         </div>
-        <div>
-          <h1 className="text-xl xl:flex lg:flex md:flex sm:hidden sm:text-2xl lg:text-4xl font-bold mb-16">
-            <span className="select-none element font-SpaceGrotesk"></span>
-          </h1>
+        {/* Photo profile */}
+        <div
+          className={`md:mb-5 rounded-full sm:mb-5 relative flex justify-center transition-all duration-300`}
+          onMouseEnter={() => setIshover(true)}
+          onMouseLeave={() => setIshover(false)}
+        >
+          <img
+            ref={imageRef}
+            src={image1}
+            alt="Ibrahim el Mailoudi's Profile Image"
+            loading="lazy"
+            className="cursor-pointer image-profile select-none shadow-sm drop-shadow-sm 2xl:w-[30rem] xl:w-96 lg:w-96 md:w-20 sm:w-10 "
+          />
+          <BsFillPatchCheckFill className="check absolute mt-4 top-full left-1/2 transform -translate-x-1/2 text-primary xl:text-base lg:text-base md:text-sm sm:text-sm" />
         </div>
       </div>
-      {/* <img
-        src={background1}
-        alt="background"
-        loading="lazy"
-        className="select-none pointer-events-none absolute top-0 right-0 -z-10 opacity-10 object-cover"
-      /> */}
-    </>
+    </div >
   );
 };
 

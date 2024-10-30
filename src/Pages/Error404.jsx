@@ -1,9 +1,11 @@
+import Container from "../components/Container";
+
 const Error404 = () => {
     return ( 
-        <div className='p-4 m-4 border-t border-b'>
+        <Container>
             <h1>Error 404</h1>
             {/* <img src={bg} alt="bg" className='w-full' /> */}
-        </div>
+        </Container>
      );
 }
  
