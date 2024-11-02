@@ -173,7 +173,7 @@ const Hero = () => {
                 </Tooltip>
                 <Tooltip title="LinkedIn" arrow placement="top">
                   <a
-                    href="https://www.linkedin.com/"
+                    href="https://www.linkedin.com/in/ibrahimelmailoudi/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
@@ -183,7 +183,7 @@ const Hero = () => {
                 </Tooltip>
                 <Tooltip title="GitHub" arrow placement="right">
                   <a
-                    href="#github"
+                    href="https://github.com/ibrahimelmailoudi"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`border border-solid rounded-full p-1.5 ${linkedClass}`}
