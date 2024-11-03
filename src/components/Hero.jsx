@@ -74,6 +74,7 @@ const Hero = () => {
           },
         }
       )
+      .fromTo(".image-profile", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
       .fromTo(".check", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
       .fromTo(".job", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
       .fromTo(".name", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 })
@@ -83,7 +84,7 @@ const Hero = () => {
 
 
   const linkedClass = `opacity-60 hover:opacity-100 transition-all duration-300 transform hover:scale-110 ${theme === "dark" ? "border-primary text-primary" : "border-black text-black"
-    }`;
+    }`; 
 
   return (
     <div
@@ -175,7 +176,7 @@ const Hero = () => {
             src={image}
             alt="Ibrahim el Mailoudi's Profile Image"
             loading="lazy"
-            className="select-none shadow-sm drop-shadow-sm 2xl:w-[30rem] xl:w-72 lg:w-96 md:w-20 sm:w-10 "
+            className="image-profile select-none shadow-sm drop-shadow-sm 2xl:w-[30rem] xl:w-72 lg:w-96 md:w-20 sm:w-10 "
           />
           <BsFillPatchCheckFill className="check absolute mt-4 top-full left-1/2 transform -translate-x-1/2 text-primary xl:text-base lg:text-base md:text-sm sm:text-sm" />
         </div>

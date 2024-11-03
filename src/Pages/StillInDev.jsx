@@ -11,7 +11,7 @@ const StillInDev = () => {
                 {theme === "dark" ?
                     <img src={whiteIcon} alt="Still in Development" className="w-72 animate-spin-slow" /> : <img src={blackIcon} alt="Still in Development" className="w-72 animate-spin-slow" />
                 }
-                <p className="font-Oxanium font-bold text-4xl">Still in developement</p>
+                <p className="font-Oxanium font-bold text-4xl animate-pulse">Still in developement</p>
             </div>
         </div>
     );
