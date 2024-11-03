@@ -159,7 +159,7 @@ const Navbar = () => {
 
       className={`nav-b rounded-b-[2rem] ${isScrollingUp && !isScrollingDown ? "sticky top-0 bg-opacity-0" : ""
         } z-20 flex items-center px-4 py-2 ${!isScrollingDown && atTop ? "" : "bg-opacity-0"
-        }`}
+        } w-screen`}
 
     >
 

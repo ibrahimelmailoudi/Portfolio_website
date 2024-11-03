@@ -175,7 +175,7 @@ const Hero = () => {
             src={image}
             alt="Ibrahim el Mailoudi's Profile Image"
             loading="lazy"
-            className="cursor-pointer image-profile select-none shadow-sm drop-shadow-sm 2xl:w-[30rem] xl:w-72 lg:w-96 md:w-20 sm:w-10 "
+            className="select-none shadow-sm drop-shadow-sm 2xl:w-[30rem] xl:w-72 lg:w-96 md:w-20 sm:w-10 "
           />
           <BsFillPatchCheckFill className="check absolute mt-4 top-full left-1/2 transform -translate-x-1/2 text-primary xl:text-base lg:text-base md:text-sm sm:text-sm" />
         </div>
