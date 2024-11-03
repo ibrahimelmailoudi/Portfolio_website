@@ -1,6 +1,8 @@
 const StillInDev = () => {
     return ( 
-        <div></div>
+        <div className="bg-white w-full h-full">
+            <p>Still in developement</p>
+        </div>
      );
 }
  

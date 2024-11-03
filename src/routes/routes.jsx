@@ -6,6 +6,7 @@ import Contact from "../Pages/Contact";
 import Projects from "../Pages/Projects";
 import Error404 from "../Pages/Error404";
 import SplashScreen from "../components/SplashScreen";
+import StillInDev from "../Pages/StillInDev";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -33,9 +34,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/Portfolio_website/" element={<Home />} />
-      <Route path="/Portfolio_website/about" element={<About/>} />
-      <Route path="/Portfolio_website/contact" element={<Contact />} />
-      <Route path="/Portfolio_website/projects" element={<Projects />} />
+      <Route path="/Portfolio_website/about" element={<StillInDev />} />
+      <Route path="/Portfolio_website/contact" element={<StillInDev  />} />
+      <Route path="/Portfolio_website/projects" element={<StillInDev  />} />
       <Route path="*" element={<Error404 />} />
     </Routes>
   );  

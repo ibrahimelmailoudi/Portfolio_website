@@ -1,6 +1,5 @@
 import { FaPaintBrush } from "react-icons/fa";
 import { ThemeContext } from "../Context/ThemeContext";
-import img1 from "../assets/images/tool_11513208.png";
 import { useContext } from "react";
 
 const Skills = () => {
