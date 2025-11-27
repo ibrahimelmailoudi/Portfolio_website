@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import img1 from "../../assets/background/pexels-apasaric-325185.jpg";
 import { ThemeContext } from "../../Context/ThemeContext";
 const FeaturedProjects = () => {
     const { theme } = useContext(ThemeContext);
