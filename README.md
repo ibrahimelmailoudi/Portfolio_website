@@ -1,5 +1,3 @@
-# React + Vite
-
 # Portfolio Website
 
 Welcome to my portfolio website repository! This project is built using React JS for developing an interactive and dynamic user interface. It incorporates Tailwind CSS for styling and GSAP for advanced animations, offering a fast and responsive user experience. The website showcases my professional projects, skills, and experiences. This project is still under active development, and new features and improvements are being added regularly.
